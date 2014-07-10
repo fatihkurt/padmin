@@ -1,0 +1,35 @@
+<div class="table-scrollable">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Parent ID
+                </th>
+                <th>
+                    Kategori
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($categories as $category) : 
+                
+                $childs = $category->getChild($category->id);
+            
+            ?>
+            <tr <?php if (count($childs) > 1) echo 'class="warning"'; ?>>
+                <td  <?php if (count($childs) > 1) echo 'class="warning"'; ?> rowspan="<?php echo count($childs)+1 ?>"><?php echo $category->id ?></td>
+                <td><?php echo $category->parent_id ?></td>
+                <td><?php echo $category->category_name ?></td>
+            </tr>
+                <?php foreach ($childs as $child) : ?>
+                <tr>
+                    <td><?php echo $child->parent_id ?></td>
+                    <td><?php echo $child->category_name ?></td>
+                </tr>
+                <?php endforeach ?>
+            <?php endforeach ?>
+    </table>
+</div>

@@ -13,6 +13,7 @@ try {
     $loader->registerDirs(array(
         APPPATH . '/controllers/',
         APPPATH . '/models/',
+        //APPPATH . '/models/category/',
         APPPATH . '/plugins/',
         APPPATH . '/library/',
     ))->register();
@@ -21,24 +22,24 @@ try {
     $di = new Phalcon\DI\FactoryDefault();
     
     
-    $di->set('dispatcher', function() use ($di) {
-
-        //Obtain the standard eventsManager from the DI
-        $eventsManager = $di->getShared('eventsManager');
-
-        //Instantiate the Security plugin
-        $security = new Security($di);
-
-        //Listen for events produced in the dispatcher using the Security plugin
-        $eventsManager->attach('dispatch', $security);
-
-        $dispatcher = new Phalcon\Mvc\Dispatcher();
-
-        //Bind the EventsManager to the Dispatcher
-        $dispatcher->setEventsManager($eventsManager);
-
-        return $dispatcher;
-    });
+//    $di->set('dispatcher', function() use ($di) {
+//
+//        //Obtain the standard eventsManager from the DI
+//        $eventsManager = $di->getShared('eventsManager');
+//
+//        //Instantiate the Security plugin
+//        $security = new Security($di);
+//
+//        //Listen for events produced in the dispatcher using the Security plugin
+//        $eventsManager->attach('dispatch', $security);
+//
+//        $dispatcher = new Phalcon\Mvc\Dispatcher();
+//
+//        //Bind the EventsManager to the Dispatcher
+//        $dispatcher->setEventsManager($eventsManager);
+//
+//        return $dispatcher;
+//    });
 
     //Setup the view component
     $di->set('view', function(){
@@ -50,10 +51,14 @@ try {
     //Setup the database service
     $di->set('db', function() use ($config) {
         return new \Phalcon\Db\Adapter\Pdo\Mysql(array(
-            "host"      => $config->db->user,
-            "username"  => 'root',
-            "password"  => '',
-            "dbname"    => ''
+            'host'      => $config->db->host,
+            'username'  => $config->db->user,
+            'password'  => $config->db->pass,
+            'dbname'    => $config->db->name,
+            'charset'   =>'utf8',
+            'options'   => array(
+                PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
+            )
         ));
     });
     

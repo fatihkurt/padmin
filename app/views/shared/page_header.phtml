@@ -1,0 +1,23 @@
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+        <h3 class="page-title">
+            <?php echo $breadjumps[count($breadjumps)-1]['name'] ?> <small></small>
+        </h3>
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+            </li>
+            <?php foreach ($breadjumps as $i=>$data) : ?>
+            <li>
+                <a href="/<?php echo $data['link'] ?>"><?php echo $data['name'] ?></a>
+                <?php if ($i < count($breadjumps)-1) : ?>
+                <i class="fa fa-angle-right"></i>
+                <?php endif ?>
+            </li>
+            <?php endforeach ?>
+        </ul>
+        <!-- END PAGE TITLE & BREADCRUMB-->
+    </div>
+</div>
