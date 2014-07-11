@@ -32,23 +32,7 @@ class CategoryController extends ControllerBase
             'name' => 'Kategori İlişkilendirme'
         ));
 
-
         $this->assets->collection('footer')->addJs('assets/js/modules/category/assign_category.js');
-
-        
-        $missingProducts = product\Product::find(array(
-            'columns'   => 'id,category_id,offer_id,category_id1,COUNT(category_id) AS say',
-            'conditions'=> 'r_category=0 AND category_id>0',
-            'group'     => 'category_id',
-            'order'     => 'say DESC',
-            'limit'     => 20,
-        ));
-
-        $missingProducts->setHydrateMode(Resultset::HYDRATE_OBJECTS);
-
-        $this->view->setVars(array(
-            'missingProducts' => $missingProducts,
-        ));
     }
     
     

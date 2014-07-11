@@ -8,11 +8,7 @@ var ViewModel = function() {
     
     this.load = function() {
         
-        $.ajax('/product/ajax_Products', {
-            type: 'POST',
-            data: {
-                'id' : prId
-            },
+        $.ajax('/product/ajax_missingProducts', {
             success: function(resp) {
 
                 console.log(resp);

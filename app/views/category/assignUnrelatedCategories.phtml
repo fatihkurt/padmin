@@ -11,20 +11,12 @@
                 <th>&nbsp;</th>
             </tr>
         </thead>
-        <tbody>
-            <?php foreach ($missingProducts as $product) : 
-                
-                if (! isset($affiliateOffers[$product->offer_id])) {
-                    
-                    $affiliateOffers[$product->offer_id] = affiliate\Offer::findFirst("af_offer_id=$product->offer_id")->toArray();
-                }
-            ?>
+        <tbody data-bind="foreach: products ">
             <tr>
                 <td><?php echo category\Merchant::getMerchant($product->category_id)->category_name ?> <small></small></td>
                 <td><?php echo $product->say ?></td>
                 <td><a href="#catFrame" id="btn-category-assign" data-id="<?php echo $product->id ?>" role="button" data-toggle="modal" class="btn default btn-mini blue"><i class="fa fa-share"></i>Kategori Ata</a></td>
             </tr>
-            <?php endforeach ?>
     </table>
 </div>
 

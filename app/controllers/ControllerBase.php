@@ -30,6 +30,23 @@ class ControllerBase extends Phalcon\Mvc\Controller
             ->addCss('themes/metronic/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css');
     }
     
+    
+    public function jsonOutput($data, $status='1', $message='') {
+        
+        return $this->jsonCostumOutput(array('status' => $status, 'messages' => $message, 'result' => $data));
+    }
+
+    public function jsonCostumOutput($arr) {
+
+        $this->view->disable();
+        
+        $this->response->setContentType('application/json', 'UTF-8');
+        
+        $this->response->setJsonContent($arr);
+        
+        return $this->response->send();
+    }
+
 
 
 
