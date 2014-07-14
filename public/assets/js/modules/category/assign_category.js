@@ -1,20 +1,51 @@
 
 
+function Category(data) {
+
+    this.catId = ko.observable(data.category_id);
+    this.title = ko.observable(data.cat_name);
+    this.count = ko.observable(data.say);
+    
+    
+}
+
+
 var ViewModel = function() {
     
+    var self = this;
+    
+    this.loading = ko.observable(false);
+    
     this.items = ko.observableArray();
+    this.offers = ko.observableArray();
+    this.merchants = ko.observableArray();
     this.currentItem = ko.observable();
  
     
     this.load = function() {
         
+        
+        this.loading(true);
+        
         $.ajax('/product/ajax_missingProducts', {
-            success: function(resp) {
+            success: function(data) {
 
-                console.log(resp);
+                var mapArr = $.map(data.products, function(data) { return new Category(data) });
+                
+                self.items(mapArr);
+                
+                self.loading(false);
             }
         })
     }
+    
+    
+    this.loadSignData = function(a,b,c,d) {
+        
+        console.log(a,b,c,d);
+        
+    }
+    
     
     
     this.load();
@@ -37,7 +68,7 @@ jQuery(document).ready(function() {
     
 //    TableAjax.init();
 
-    $('#btn-category-assign').click(getSamplaImages)
+    $('#btn-category-assign').click(getSampleImages)
 });
 
 
