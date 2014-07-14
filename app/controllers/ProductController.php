@@ -18,7 +18,7 @@ class ProductController extends ControllerBase
         
         $products = product\Product::find(
             array(
-                'columns'   => 'id,category_id,offer_id,category_id1,COUNT(category_id) AS say',
+                'columns'   => 'category_id,offer_id,category_id1,COUNT(category_id) AS say',
                 'conditions'=> 'r_category=0 AND category_id>0',
                 'group'     => 'category_id',
                 'order'     => 'say DESC',
@@ -29,9 +29,13 @@ class ProductController extends ControllerBase
         $affiliateOffers = array();
         $merchants = array();
         $checkArr = array();
-        foreach ($products as $product) {
+        foreach ($products as & $product) {
             
-            $merchants[] = category\Merchant::findFirst($product['category_id'])->toArray();
+            $merchant = category\Merchant::findFirst($product['category_id'])->toArray();
+            
+            $product['cat_name'] = $merchant['category_name'];
+            
+            $merchants[] = $merchant;
             
             if (! isset($checkArr[$product['offer_id']])) {
                     

@@ -11,13 +11,16 @@
                 <th>&nbsp;</th>
             </tr>
         </thead>
-        <tbody data-bind="foreach: products ">
+        <tbody data-bind="foreach: items ">
             <tr>
-                <td><?php echo category\Merchant::getMerchant($product->category_id)->category_name ?> <small></small></td>
-                <td><?php echo $product->say ?></td>
-                <td><a href="#catFrame" id="btn-category-assign" data-id="<?php echo $product->id ?>" role="button" data-toggle="modal" class="btn default btn-mini blue"><i class="fa fa-share"></i>Kategori Ata</a></td>
+                <td data-bind="text: title"><small></small></td>
+                <td data-bind="text: count"></td>
+                <td><a href="#catFrame"  data-bind="click: $parent.loadSignData" role="button" data-toggle="modal" class="btn default btn-mini blue"><i class="fa fa-share"></i>Kategori Ata</a></td>
             </tr>
     </table>
+    <div data-bind="visible: loading" style="padding: 50px; text-align: center;">
+        <img src="/themes/metronic/assets/global/img/loading-spinner-blue.gif" />
+    </div>
 </div>
 
 
@@ -31,7 +34,6 @@
                 <h4 class="modal-title">Kategori Atama</h4>
             </div>
             <div class="modal-body">
-                
                 
                 <form action="#" class="form-horizontal">
                     <div class="form-body">
